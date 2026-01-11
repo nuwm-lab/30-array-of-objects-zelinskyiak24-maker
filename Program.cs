@@ -4,7 +4,7 @@ class CubicPolynomial
 {
     double a3, a2, a1, a0;
 
-    // Конструктор
+  
     public CubicPolynomial(double a3, double a2, double a1, double a0)
     {
         this.a3 = a3;
@@ -13,7 +13,7 @@ class CubicPolynomial
         this.a0 = a0;
     }
 
-    // Метод для обчислення мінімуму на [a; b]
+   
     public double GetMin(double a, double b, double e)
     {
         double min = a3 * a * a * a + a2 * a * a + a1 * a + a0;
@@ -38,7 +38,7 @@ class Program
 
         CubicPolynomial[] polynomials = new CubicPolynomial[count];
 
-        // Створення масиву об’єктів
+        
         for (int i = 0; i < count; i++)
         {
             Console.WriteLine("Многочлен " + (i + 1));
@@ -63,7 +63,7 @@ class Program
         Console.Write("Введіть e: ");
         double e = Convert.ToDouble(Console.ReadLine());
 
-        // Пошук мінімального значення
+        
         double min = polynomials[0].GetMin(a, b, e);
         int index = 0;
 
