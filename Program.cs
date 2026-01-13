@@ -2,9 +2,8 @@ using System;
 
 class CubicPolynomial
 {
-    double a3, a2, a1, a0;
+    private double a3, a2, a1, a0;
 
-  
     public CubicPolynomial(double a3, double a2, double a1, double a0)
     {
         this.a3 = a3;
@@ -13,71 +12,43 @@ class CubicPolynomial
         this.a0 = a0;
     }
 
-   
-    public double GetMin(double a, double b, double e)
+    public double Value(double x)
     {
-        double min = a3 * a * a * a + a2 * a * a + a1 * a + a0;
-
-        for (double x = a; x <= b; x += e)
-        {
-            double value = a3 * x * x * x + a2 * x * x + a1 * x + a0;
-            if (value < min)
-                min = value;
-        }
-
-        return min;
+        return a3 * x * x * x + a2 * x * x + a1 * x + a0;
     }
 }
 
 class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        Console.Write("Введіть кількість многочленів: ");
-        int count = Convert.ToInt32(Console.ReadLine());
-
-        CubicPolynomial[] polynomials = new CubicPolynomial[count];
-
-        
-        for (int i = 0; i < count; i++)
+        CubicPolynomial[] polynomials =
         {
-            Console.WriteLine("Многочлен " + (i + 1));
-            Console.Write("a3 = ");
-            double a3 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("a2 = ");
-            double a2 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("a1 = ");
-            double a1 = Convert.ToDouble(Console.ReadLine());
-            Console.Write("a0 = ");
-            double a0 = Convert.ToDouble(Console.ReadLine());
-
-            polynomials[i] = new CubicPolynomial(a3, a2, a1, a0);
-        }
+            new CubicPolynomial(1, -2, 3, -1),
+            new CubicPolynomial(-1, 0, 2, 4)
+        };
 
         Console.Write("Введіть a: ");
-        double a = Convert.ToDouble(Console.ReadLine());
+        double a = double.Parse(Console.ReadLine());
 
         Console.Write("Введіть b: ");
-        double b = Convert.ToDouble(Console.ReadLine());
+        double b = double.Parse(Console.ReadLine());
 
-        Console.Write("Введіть e: ");
-        double e = Convert.ToDouble(Console.ReadLine());
+        Console.Write("Введіть ε: ");
+        double eps = double.Parse(Console.ReadLine());
 
-        
-        double min = polynomials[0].GetMin(a, b, e);
-        int index = 0;
-
-        for (int i = 1; i < count; i++)
+        for (int i = 0; i < polynomials.Length; i++)
         {
-            double currentMin = polynomials[i].GetMin(a, b, e);
-            if (currentMin < min)
-            {
-                min = currentMin;
-                index = i;
-            }
-        }
+            double min = polynomials[i].Value(a);
 
-        Console.WriteLine("Многочлен з мінімальним значенням: " + (index + 1));
-        Console.WriteLine("Мінімальне значення = " + min);
+            for (double x = a; x <= b; x += eps)
+            {
+                double value = polynomials[i].Value(x);
+                if (value < min)
+                    min = value;
+            }
+
+            Console.WriteLine($"Мінімальне значення {i + 1}-го многочлена: {min}");
+        }
     }
 }
